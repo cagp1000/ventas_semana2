@@ -1,0 +1,6 @@
+TipoDocumento;NumeroDocumento;NombresVendedor;ApellidosVendedor
+CC;18397655;Alejandro;Velez
+CC;52345243;Myra;Moreno
+CC;24354267;Pedro;Castillo
+CC;126776666;Mario;Millan
+CC;53155393;Diana;Romero
