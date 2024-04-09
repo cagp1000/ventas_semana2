@@ -11,50 +11,47 @@ import java.io.PrintWriter;
 class GenerateInfoFiles {
 	String response;
 	
-	public String createProductsFile(String ruta) {
-		// Generar archivo productos
-        try {
-            String columnas = "IDProducto;NombreProducto;PrecioPorUnidadProducto\n";
-            String producto1 = "1;arroz diana 425gr;900\n";
-            String producto2 = "2;café sello rojo 30gr;450\n";
-            String producto3 = "3;azucar manuelita 1000gr;1200\n";
-            String producto4 = "4;sal refisal 500gr;500\n";
-            String producto5 = "5;atun van camps 250gr;3500\n";
-            String producto6 = "6;salsa de tomate fruko 500gr;3000\n";
-            String producto7 = "7;leche klim 800gr;6000\n";
-            String producto8 = "8;aceite girasol 1000ml;9800\n";
-            String producto9 = "9;crema dental colgate 200gr;10000\n";
-            String producto10 = "10;jabon en polbo fab 1000gr;5000\n";
-            
-            File file = new File(ruta);
-            if (!file.exists()) { 
-                file.createNewFile();
-                FileWriter fw = new FileWriter(file); 
-                BufferedWriter bw = new BufferedWriter(fw); 
-                bw.write(columnas);
-                bw.write(producto1);
-                bw.write(producto2);
-                bw.write(producto3);
-                bw.write(producto4);
-                bw.write(producto5);
-                bw.write(producto6);
-                bw.write(producto7);
-                bw.write(producto8);
-                bw.write(producto9);
-                bw.write(producto10);
-                bw.close();
-                response = "Archivo de productos generado!";
-            } else {
-	    		response = "Archivo de productos ya existe!";
-	    	}
-        } catch (Exception e) {
-        	StringWriter sw = new StringWriter();
-    		PrintWriter pw = new PrintWriter(sw);
-    		e.printStackTrace(pw);
-    		response = sw.toString();
-        }
-        
-        return response;
+	public String[][] createProductsFile(String ruta) {
+		String[][] productsList = new String[7][1]; // Variable que devuelve array con datos del archivo
+	      
+	    // Generar archivo productos
+	        try {
+	          // Armar lista de productos para crear archivo
+	            String columnas = "IDProducto;NombreProducto;PrecioPorUnidadProducto\n";
+	            String producto1 = "1;Arroz Diana 425gr;900\n";
+	            String producto2 = "2;Café Sello Rojo 30gr;450\n";
+	            String producto3 = "3;Azúcar manuelita 1000gr;1200\n";
+	            String producto4 = "4;Sal Refisal 500gr;500\n";
+	            String producto5 = "5;Atún VanCamps 250gr;3500";
+	            String productos = columnas + producto1 + producto2 + producto3 + producto4 + producto5;
+	            
+	            // Crear lista de productos para retornar
+	          productsList[0] = columnas.replace("\n", "").split(";");
+	          productsList[1] = producto1.replace("\n", "").split(";");
+	          productsList[2] = producto2.replace("\n", "").split(";");
+	          productsList[3] = producto3.replace("\n", "").split(";");
+	          productsList[4] = producto4.replace("\n", "").split(";");
+	          productsList[5] = producto5.replace("\n", "").split(";");
+	            
+	            File file = new File(ruta);
+	            if (!file.exists()) { 
+	                file.createNewFile();
+	                FileWriter fw = new FileWriter(file); 
+	                BufferedWriter bw = new BufferedWriter(fw); 
+	                bw.write(productos);
+	                bw.close();
+	                productsList[6][0] = "Archivo de productos generado!";
+	            } else {
+	              productsList[6][0] = "Archivo de productos ya existe!";
+	        }
+	        } catch (Exception e) {
+	          StringWriter sw = new StringWriter();
+	        PrintWriter pw = new PrintWriter(sw);
+	        e.printStackTrace(pw);
+	        productsList[6][0] = sw.toString();
+	        }
+	        
+	        return productsList;
 	}
 	
 	public String createSalesManInfoFile(String ruta) {
@@ -131,10 +128,13 @@ class GenerateInfoFiles {
 public class Main {
 
 	public static void main(String[] args) {
+		// Instanciar el objeto ventas con la clase GenerateIfoFiles
+		GenerateInfoFiles ventas = new GenerateInfoFiles();
+	
 		// Generar archivo productos_generados.txt
-        String rutaProductosGenerados = "productos_generados.txt";
-		GenerateInfoFiles genProductsFile = new GenerateInfoFiles();
-		System.out.println(genProductsFile.createProductsFile(rutaProductosGenerados));
+		String rutaProductosGenerados = "productos_generados.txt";
+		String[][] resultProducts = ventas.createProductsFile(rutaProductosGenerados);
+		System.out.println(resultProducts[6][0].toString());
 
 		// Generar archivo vendedores_generados.txt
     	String rutaVendedoresGenerados = "vendedores_generados.txt";
