@@ -1,6 +1,0 @@
-TipoDocumentoVendedor;NúmeroDocumentoVendedor;IDProducto;CantidadProductoVendido
-CC;18397655;6;4
-CC;52345243;2;5
-CC;24354267;3;1
-CC;126776666;1;6
-CC;53155393;5;3
