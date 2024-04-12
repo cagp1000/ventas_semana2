@@ -1,4 +1,6 @@
 package ventas_semana2;
+import java.util.Random;
+import java.util.Arrays;
 
 import java.io.BufferedWriter; 
 import java.io.File; 
@@ -95,6 +97,36 @@ class GenerateInfoFiles {
     	return sellersList;
 	}
 	
+	public String[][] createListSales(String[][] resultProducts, String[][] resultSellers) {
+		// Armar lista de ventas por vendedor
+		String[][] dataSellers = new String[5][1]; // Variable que devuelve array con datos de ventas aleatorias
+		String seller = ""; // Variable para almacenar ventas por producto
+		Random rand = new Random(); // Variable instanciada para generar cantidades aleatorias
+		
+		// For para armar variable string y variable tipo array
+		for (int i = 1; i < resultSellers.length - 1; i++) {
+			// Almacenar número de documento del vendedor
+            for (int j = 0; j < resultSellers[i].length -2; j++) {
+            	if (seller == "") {
+            		seller = resultSellers[i][j];
+            	} else {
+            		seller += ";" + resultSellers[i][j];
+            	}
+            }
+            // Almacenar cantidad vendida del producto
+            for (int k = 1; k < resultProducts.length - 1; k++) {
+            	for (int l = 0; l < 1; l++) {
+            		seller += ";" +resultProducts[k][l];
+            		int randomNum = rand.nextInt(60 - 30); // Valor aleatorio de cantidad del producto
+            		seller += ";" + randomNum;
+            	}
+            }
+            dataSellers[i-1] = seller.split(";"); // Almacenamiento de los datos en la variable tipo array
+            seller = "";
+		}
+		return dataSellers;
+	}
+	
 	public String createSalesMenFile(String ruta) {		
 		// Generar archivos de ventas
 		try {
@@ -147,6 +179,10 @@ public class Main {
     	String rutaVendedoresGenerados = "vendedores_generados.txt";
     	String[][] resultSellers = ventas.createSalesManInfoFile(rutaVendedoresGenerados);
     	System.out.println(resultSellers[6][0].toString());
+    	
+    	// Generar lista de ventas para generar archivo de ventas
+    	String[][] resultListSales = ventas.createListSales(resultProducts, resultSellers);
+    	System.out.println(Arrays.deepToString(resultListSales));
 		
 		// Generar archivo ventas_generadas.txt
 		String rutaVentasGeneradas = "ventas_generadas.txt";
