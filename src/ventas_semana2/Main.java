@@ -54,7 +54,9 @@ class GenerateInfoFiles {
 	        return productsList;
 	}
 	
-	public String createSalesManInfoFile(String ruta) {
+	public String[][] createSalesManInfoFile(String ruta) {
+		String[][] sellersList = new String[7][1]; // Variable que devuelve array con datos del archivo
+		
 		// Generar archivo vendedores
     	try {
 	    	String columnas = "TipoDocumento;NumeroDocumento;NombresVendedor;ApellidosVendedor\n";
@@ -63,29 +65,34 @@ class GenerateInfoFiles {
 	    	String vendedor3 = "CC;24354267;Pedro;Castillo\n";
 	    	String vendedor4 = "CC;126776666;Mario;Millan\n";
 	    	String vendedor5 = "CC;53155393;Diana;Romero\n";
+	    	String vendedores = columnas + vendedor1 + vendedor2 + vendedor3 + vendedor4 + vendedor5;
+	    	
+	    	// Crear lista de vendedores para retornar
+	    	sellersList[0] = columnas.replace("\n", "").split(";");
+	    	sellersList[1] = vendedor1.replace("\n", "").split(";");
+	    	sellersList[2] = vendedor2.replace("\n", "").split(";");
+	    	sellersList[3] = vendedor3.replace("\n", "").split(";");
+	    	sellersList[4] = vendedor4.replace("\n", "").split(";");
+	    	sellersList[5] = vendedor5.replace("\n", "").split(";");
+	    	
 	    	File file = new File(ruta);
 	    	if (!file.exists()) {
 		    	file.createNewFile();
 		    	FileWriter fw = new FileWriter(file);
 		    	BufferedWriter bw = new BufferedWriter(fw);
-		    	bw.write(columnas);
-		    	bw.write(vendedor1);
-		    	bw.write(vendedor2);
-		    	bw.write(vendedor3);
-		    	bw.write(vendedor4);
-		    	bw.write(vendedor5);
+		    	bw.write(vendedores);
 		    	bw.close();
-		    	response = "Archivo de vendedores generado!";
+		    	sellersList[6][0] = "Archivo de vendedores generado!";
 	    	} else {
-	    		response = "Archivo de vendedores ya existe!";
+	    		sellersList[6][0] = "Archivo de vendedores ya existe!";
 	    	}
     	} catch (Exception e) {
     		StringWriter sw = new StringWriter();
     		PrintWriter pw = new PrintWriter(sw);
     		e.printStackTrace(pw);
-    		response = sw.toString();
+    		sellersList[6][0] = sw.toString();
     	}
-    	return response;
+    	return sellersList;
 	}
 	
 	public String createSalesMenFile(String ruta) {		
@@ -138,8 +145,8 @@ public class Main {
 
 		// Generar archivo vendedores_generados.txt
     	String rutaVendedoresGenerados = "vendedores_generados.txt";
-		GenerateInfoFiles genSellMenFile = new GenerateInfoFiles();
-		System.out.println(genSellMenFile.createSalesManInfoFile(rutaVendedoresGenerados));
+    	String[][] resultSellers = ventas.createSalesManInfoFile(rutaVendedoresGenerados);
+    	System.out.println(resultSellers[6][0].toString());
 		
 		// Generar archivo ventas_generadas.txt
 		String rutaVentasGeneradas = "ventas_generadas.txt";

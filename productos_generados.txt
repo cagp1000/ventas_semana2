@@ -1,11 +1,6 @@
 IDProducto;NombreProducto;PrecioPorUnidadProducto
-1;arroz diana 425gr;900
-2;café sello rojo 30gr;450
-3;azucar manuelita 1000gr;1200
-4;sal refisal 500gr;500
-5;atun van camps 250gr;3500
-6;salsa de tomate fruko 500gr;3000
-7;leche klim 800gr;6000
-8;aceite girasol 1000ml;9800
-9;crema dental colgate 200gr;10000
-10;jabon en polbo fab 1000gr;5000
+1;Arroz Diana 425gr;900
+2;Café Sello Rojo 30gr;450
+3;Azúcar manuelita 1000gr;1200
+4;Sal Refisal 500gr;500
+5;Atún VanCamps 250gr;3500
