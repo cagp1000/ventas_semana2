@@ -45,7 +45,8 @@ class GenerateInfoFiles {
 	                productsList[6][0] = "Archivo de productos generado!";
 	            } else {
 	              productsList[6][0] = "Archivo de productos ya existe!";
-	        }
+	            
+	            }
 	        } catch (Exception e) {
 	          StringWriter sw = new StringWriter();
 	        PrintWriter pw = new PrintWriter(sw);
@@ -176,6 +177,59 @@ class GenerateInfoFiles {
     	}
     	return response;
 	}
+	
+	public String createTotalSalesSellers(String rutaTotalVentasVendedores, String[][] resultListSales,
+		      String[][] resultProducts, String[][] resultSellers) {
+	  	String seller = "";  // Variable para almacenar string para crear archivo
+	    String sellerForList = ""; // Variable para almacenar nombre por vendedor
+	    int value = 0; // Variable para almacenar valor de venta por vendedor
+	    int counterProducts = 0; // Variable para traer el registro del valor de cada producto
+	    int counterList = 0; // Variable para almacenar en cada fila el resultado de ventas
+	    String[][] totalListSales = new String[5][1]; // Variable tipo array para organizar
+	    
+	    // Crear variable para archivo y variable array
+	    for (String[] listSales : resultListSales) {
+	      for (int i = 1; i < listSales.length; i += 2) {
+	        if (i == 1) {          
+	          if (sellerForList == "") {
+	            sellerForList = resultSellers[counterList+1][2] + " " + resultSellers[counterList+1][3] + ";";
+	            seller += sellerForList;
+	          } else {
+	            sellerForList += listSales[i] + ";";
+	            seller += listSales[i] + ";";
+	          }
+	          counterProducts += 1;
+	          continue;
+	        }
+	        value += Integer.parseInt(listSales[i]) * Integer.parseInt(resultProducts[counterProducts][2]);
+	        counterProducts += 1;
+	      }
+	      seller += value + "\n";
+	      sellerForList += value;
+	      totalListSales[counterList] = sellerForList.split(";");
+	      sellerForList = "";
+	      counterProducts = 0;
+	      counterList += 1;
+	    }
+	    
+	    // Generar archivo de ventas totales
+	    try {
+	      String archivo = rutaTotalVentasVendedores;
+	      File file = new File(archivo);
+	      file.createNewFile();
+	        FileWriter fw = new FileWriter(file);
+	        BufferedWriter bw = new BufferedWriter(fw);
+	        bw.write(seller);
+	        bw.close();
+	        response = "Archivo ventas totales vendedores generado!";
+	    } catch (Exception e) {
+	        StringWriter sw = new StringWriter();
+	        PrintWriter pw = new PrintWriter(sw);
+	        e.printStackTrace(pw);
+	        response = sw.toString();
+	    }    
+	    return response;
+	}
 }
 
 
@@ -204,6 +258,12 @@ public class Main {
     	String rutaVentasGeneradas = "ventas_generadas_";
     	String resultSalesFile = ventas.createSalesMenFile(rutaVentasGeneradas, resultListSales);
     	System.out.println(resultSalesFile);
+    	
+    	// Generar archivo de vendedores y valor de ventas por cada uno
+    	String rutaTotalVentasVendedores = "total_ventas_vendedores.txt";
+    	String resultTotalVentasVendedores = ventas.createTotalSalesSellers(rutaTotalVentasVendedores, resultListSales, resultProducts, resultSellers);
+    	System.out.println(resultTotalVentasVendedores);
 	}
 
 }
+
