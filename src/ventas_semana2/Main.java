@@ -1,6 +1,11 @@
 package ventas_semana2;
 import java.util.Random;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
 
 import java.io.BufferedWriter; 
 import java.io.File; 
@@ -254,6 +259,21 @@ class GenerateInfoFiles {
 	    }    
 	    return response;
 	}
+	
+	public String createTotalQuantityProducts(String rutaTotalCantidadProductos, String[][] resultListSales, String[][] resultProducts) {
+		Map<String, Integer> quantiyProducts = new HashMap<String, Integer>();
+		String product1 = ""; String product2 = ""; String product3 = ""; String product4 = ""; String product5 = ""; // Declarar varias variables en la misma línea
+		int quantity1 = 0; int quantity2 = 0; int quantity3 = 0; int quantity4 = 0; int quantity5 = 0;
+		
+		//Armar variable con datos para crear archivo y variable array
+		for (String[] listSeller : resultListSales) { 
+			for (int i = 2; i < listSeller.length; i += 2) {
+				if (Integer.parseInt(listSeller[i]) == 1) {
+					
+				}
+			}
+		}
+	}
 }
 
 
@@ -287,6 +307,11 @@ public class Main {
     	String rutaTotalVentasVendedores = "total_ventas_vendedores.txt";
     	String resultTotalVentasVendedores = ventas.createTotalSalesSellers(rutaTotalVentasVendedores, resultListSales, resultProducts, resultSellers);
     	System.out.println(resultTotalVentasVendedores);
+    	
+    	//generar archivo total cantidad por productos 
+    	String rutaTotalCantidadProductos = "total_cantidad_productos.txt";
+    	String resultadoTotalCantidadProdcutos = ventas.createTotalQuantityProducts(rutaTotalCantidadProductos, resultListSales, resultProducts);
+    	System.out.println(resultadoTotalCantidadProductos);
 	}
 
 }
