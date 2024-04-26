@@ -186,6 +186,7 @@ class GenerateInfoFiles {
 	    int counterProducts = 0; // Variable para traer el registro del valor de cada producto
 	    int counterList = 0; // Variable para almacenar en cada fila el resultado de ventas
 	    String[][] totalListSales = new String[5][1]; // Variable tipo array para organizar
+	    String[] tmp = new String[1];
 	    
 	    // Crear variable para archivo y variable array
 	    for (String[] listSales : resultListSales) {
@@ -210,8 +211,20 @@ class GenerateInfoFiles {
 	      sellerForList = "";
 	      counterProducts = 0;
 	      counterList += 1;
+	      value = 0;
 	    }
 	    
+	    //ordenar listado de ventas de mayor a menor
+	    for (int i = 0; i < totalListSales.length; i++) {
+	    	for (int j = 1; j < totalListSales.length - i; j++) {
+	    		if (Integer.parseInt(totalListSales[j - 1][1]) < Integer.parseInt(totalListSales[j][1])) {
+	    			tmp = totalListSales[j - 1];
+	    			totalListSales[j - 1] = totalListSales[j];
+	    			totalListSales[j] = tmp;
+	    		}
+	    	}
+	    }
+	    System.out.println(Arrays.deepToString(totalListSales));
 	    // Generar archivo de ventas totales
 	    try {
 	      String archivo = rutaTotalVentasVendedores;
