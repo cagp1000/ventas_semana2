@@ -1,5 +1,5 @@
-Alejandro Velez;105700
-Myra Moreno;75150
-Pedro Castillo;103200
-Mario Millan;41850
-Diana Romero;89200
+Mario Millan;166150
+Diana Romero;135450
+Myra Moreno;81100
+Pedro Castillo;56750
+Alejandro Velez;51900

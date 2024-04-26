@@ -224,6 +224,17 @@ class GenerateInfoFiles {
 	    		}
 	    	}
 	    }
+	    
+	    // con listado ordenado,armar informacion para generar archivo
+	    seller = "";
+	    for (int i = 0; i < totalListSales.length; i++) {
+	    	if (seller == "") {
+	    		seller = totalListSales[i][0] + ";" + totalListSales[i][1];
+	    	} else {
+	    		seller += "\n" + totalListSales[i][0] + ";" + totalListSales[i][1];
+	    	}
+	    }
+	    
 	    System.out.println(Arrays.deepToString(totalListSales));
 	    // Generar archivo de ventas totales
 	    try {
