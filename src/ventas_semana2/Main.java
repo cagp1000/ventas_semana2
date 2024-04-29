@@ -240,7 +240,6 @@ class GenerateInfoFiles {
 	    	}
 	    }
 	    
-	    System.out.println(Arrays.deepToString(totalListSales));
 	    // Generar archivo de ventas totales
 	    try {
 	      String archivo = rutaTotalVentasVendedores;
@@ -261,9 +260,10 @@ class GenerateInfoFiles {
 	}
 	
 	public String createTotalQuantityProducts(String rutaTotalCantidadProductos, String[][] resultListSales, String[][] resultProducts) {
-		Map<String, Integer> quantiyProducts = new HashMap<String, Integer>();
+		Map<String, Integer> quantityProducts = new HashMap<String, Integer>();
 		String product1 = ""; String product2 = ""; String product3 = ""; String product4 = ""; String product5 = ""; // Declarar varias variables en la misma línea
 		int quantity1 = 0; int quantity2 = 0; int quantity3 = 0; int quantity4 = 0; int quantity5 = 0;
+		String products = "";
 		
 		//Armar variable con datos para crear archivo y variable array
 		for (String[] listSeller : resultListSales) { 
@@ -297,13 +297,31 @@ class GenerateInfoFiles {
 			}
 		}
 		
-		//crear variable con datos para generar archivo
-		String products = product1 + ";" + quantity1;
-		products += "\n" + product2 + ";" + quantity2;
-		products += "\n" + product3 + ";" + quantity3;
-		products += "\n" + product4 + ";" + quantity4;
-		products += "\n" + product5 + ";" + quantity5;
-
+		//crear lista con datos para generar archivo
+		quantityProducts.put(product1, quantity1);
+		quantityProducts.put(product2, quantity2);
+		quantityProducts.put(product3, quantity3);
+		quantityProducts.put(product4, quantity4);
+		quantityProducts.put(product5, quantity5);
+		
+		//organizar lista para generar archivo
+		List<Integer> listValuesAsc = new ArrayList<>(quantityProducts.values());
+		Collections.sort(listValuesAsc);
+		
+		for (int value : listValuesAsc) {
+			for (String key : quantityProducts.keySet()) {
+				if (value == quantityProducts.get(key)) {
+					if (products == "") {
+						products = key + ";" + quantityProducts.get(key);
+						break;
+					} else {
+						products += "\n" + key + ";" + quantityProducts.get(key);
+						break;
+					}
+				}
+			}
+		}
+		
 		// Generar archivo de ventas totales
 	    try {
 	      String archivo = rutaTotalCantidadProductos;
