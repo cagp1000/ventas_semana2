@@ -219,11 +219,7 @@ class GenerateInfoFiles {
 	      value = 0;
 	    }
 	    
-<<<<<<< HEAD
-	    // ordenar listado de ventas de mayor a menor
-=======
 	    //ordenar listado de ventas de mayor a menor
->>>>>>> 5bb4070ffacb078c0f860edfd2cb8c3f444d58d4
 	    for (int i = 0; i < totalListSales.length; i++) {
 	    	for (int j = 1; j < totalListSales.length - i; j++) {
 	    		if (Integer.parseInt(totalListSales[j - 1][1]) < Integer.parseInt(totalListSales[j][1])) {
@@ -233,9 +229,6 @@ class GenerateInfoFiles {
 	    		}
 	    	}
 	    }
-<<<<<<< HEAD
-	    		
-=======
 	    
 	    // con listado ordenado,armar informacion para generar archivo
 	    seller = "";
@@ -247,7 +240,6 @@ class GenerateInfoFiles {
 	    	}
 	    }
 	    
->>>>>>> 5bb4070ffacb078c0f860edfd2cb8c3f444d58d4
 	    System.out.println(Arrays.deepToString(totalListSales));
 	    // Generar archivo de ventas totales
 	    try {
@@ -277,10 +269,58 @@ class GenerateInfoFiles {
 		for (String[] listSeller : resultListSales) { 
 			for (int i = 2; i < listSeller.length; i += 2) {
 				if (Integer.parseInt(listSeller[i]) == 1) {
-					
+					if (product1 == "") {
+						product1 = resultProducts[1][1];
+					}
+					quantity1 += Integer.parseInt(listSeller[i + 1]);
+				} else if (Integer.parseInt(listSeller[i]) == 2) {
+					if (product2 == "") {
+						product2 = resultProducts[2][1];
+					}
+					quantity2 += Integer.parseInt(listSeller[i + 1]);
+				} else if (Integer.parseInt(listSeller[i]) == 3) {
+					if (product3 == "") {
+						product3 = resultProducts[3][1];
+					}
+					quantity3 += Integer.parseInt(listSeller[i + 1]);
+				} else if (Integer.parseInt(listSeller[i]) == 4) {
+					if (product4 == "") {
+						product4 = resultProducts[4][1];
+					}
+					quantity4 += Integer.parseInt(listSeller[i + 1]);
+				} else if (Integer.parseInt(listSeller[i]) == 5) {
+					if (product5 == "") {
+						product5 = resultProducts[5][1];
+					}
+					quantity5 += Integer.parseInt(listSeller[i + 1]);
 				}
 			}
 		}
+		
+		//crear variable con datos para generar archivo
+		String products = product1 + ";" + quantity1;
+		products += "\n" + product2 + ";" + quantity2;
+		products += "\n" + product3 + ";" + quantity3;
+		products += "\n" + product4 + ";" + quantity4;
+		products += "\n" + product5 + ";" + quantity5;
+
+		// Generar archivo de ventas totales
+	    try {
+	      String archivo = rutaTotalCantidadProductos;
+	      File file = new File(archivo);
+	      file.createNewFile();
+	        FileWriter fw = new FileWriter(file);
+	        BufferedWriter bw = new BufferedWriter(fw);
+	        bw.write(products);
+	        bw.close();
+	        response = "Archivo cantidad totales productos generado!";
+	    } catch (Exception e) {
+	        StringWriter sw = new StringWriter();
+	        PrintWriter pw = new PrintWriter(sw);
+	        e.printStackTrace(pw);
+	        response = sw.toString();
+	    }
+	    return response;
 	}
 }
 
@@ -319,7 +359,7 @@ public class Main {
     	//generar archivo total cantidad por productos 
     	String rutaTotalCantidadProductos = "total_cantidad_productos.txt";
     	String resultadoTotalCantidadProdcutos = ventas.createTotalQuantityProducts(rutaTotalCantidadProductos, resultListSales, resultProducts);
-    	System.out.println(resultadoTotalCantidadProductos);
+    	System.out.println(resultadoTotalCantidadProdcutos);
 	}
 
 }

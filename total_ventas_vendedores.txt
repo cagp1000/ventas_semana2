@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-Alejandro Velez;54050
-Myra Moreno;97150
-Pedro Castillo;85550
-Mario Millan;30350
-Diana Romero;45000
-=======
-Mario Millan;166150
-Diana Romero;135450
-Myra Moreno;81100
-Pedro Castillo;56750
-Alejandro Velez;51900
->>>>>>> 5bb4070ffacb078c0f860edfd2cb8c3f444d58d4
+Diana Romero;148850
+Pedro Castillo;122100
+Mario Millan;102750
+Myra Moreno;96650
+Alejandro Velez;86250
